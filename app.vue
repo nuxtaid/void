@@ -21,6 +21,10 @@ h2 {
   @apply text-2xl font-light;
 }
 
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  @apply no-underline;
+}
+
 h3 {
   @apply text-xl font-light;
 }
