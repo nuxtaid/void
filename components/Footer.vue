@@ -9,7 +9,7 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
 </script>
 
 <template>
-  <div class="absolute bottom-0 right-0 left-0 backdrop-blur border-t border-neutral-400/10">
+  <div class="fixed bottom-0 right-0 left-0 backdrop-blur border-t border-neutral-400/10">
     <footer class="mx-auto flex max-w-7xl w-full items-center justify-between transition-all text-[#818181] p-4">
       <div>
         void
