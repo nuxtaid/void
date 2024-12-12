@@ -127,6 +127,6 @@ onBeforeUnmount(() => {
 <template>
   <canvas
     ref="canvasRef"
-    class="w-full h-full"
+    class="w-full h-full pointer-events-none"
   />
 </template>
