@@ -5,7 +5,15 @@ export default <Partial<Config>>{
   ],
   theme: {
     extend: {
-
+      animation: {
+        blink: 'blink 1s infinite',
+      },
+      keyframes: {
+        blink: {
+          '0%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+      },
     },
   },
 }
