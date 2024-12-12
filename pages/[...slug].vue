@@ -16,6 +16,15 @@ const { data: page } = await useAsyncData(route.path, () => queryCollection('con
           />
         </h1>
       </div>
+      <div
+        v-if="page.meta.image"
+        class="mb-4"
+      >
+        <img
+          :src="page.meta.image"
+          class="rounded-lg aspect-video max-w-6xl"
+        >
+      </div>
       <ContentRenderer
         v-if="page.body.value?.length"
         :value="page"

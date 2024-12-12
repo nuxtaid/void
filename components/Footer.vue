@@ -13,7 +13,10 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
     <footer class="mx-auto flex max-w-7xl w-full items-center justify-between transition-all text-[#818181] p-4">
       <div>
         void by
-        <NuxtLink to="https://github.com/nuxtaid">
+        <NuxtLink
+          to="https://github.com/nuxtaid"
+          target="_blank"
+        >
           NuxtAid
         </NuxtLink>
       </div>
@@ -22,6 +25,7 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
           v-for="item, index of navigation"
           :key="index"
           :to="item.path"
+          class="no-underline"
         >
           {{ item.title }}
         </NuxtLink>

@@ -47,7 +47,7 @@ const typewriter = [
           v-for="item in navigation"
           :key="item.path"
           :to="item.path"
-          class="text-sm font-semibold leading-6"
+          class="text-sm no-underline"
         >
           {{ item.title }}
         </NuxtLink>

@@ -2,7 +2,9 @@
   <Body class="dark:text-white dotted">
     <main>
       <VHeader />
-      <NuxtPage />
+      <div class="mb-8">
+        <NuxtPage />
+      </div>
       <VFooter />
     </main>
   </Body>
