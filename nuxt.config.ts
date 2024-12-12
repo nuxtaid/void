@@ -13,10 +13,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
   ],
 
-  devtools: {
-    enabled: true,
-  },
-
   components: {
     dirs: [
       {
@@ -24,6 +20,10 @@ export default defineNuxtConfig({
         path: resolve('./components'),
       },
     ],
+  },
+
+  devtools: {
+    enabled: true,
   },
 
   colorMode: {

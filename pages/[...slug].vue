@@ -5,6 +5,9 @@ const { data: page } = await useAsyncData(route.path, () => queryCollection('con
 
 <template>
   <div class="container mx-auto mt-20">
-    <ContentRenderer v-if="page?.body.value?.length" :value="page" />
+    <ContentRenderer
+      v-if="page?.body.value?.length"
+      :value="page"
+    />
   </div>
 </template>
