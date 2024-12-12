@@ -1,5 +1,5 @@
 <template>
-  <Body class="dark:bg-[#161616] dark:text-white">
+  <Body class="dark:text-white dotted">
     <main>
       <VHeader />
       <NuxtPage />
@@ -35,5 +35,23 @@ p {
 
 a {
   @apply underline hover:decoration-cyan-500 hover:text-cyan-500;
+}
+
+.dotted {
+  --dot-size: 1.3px;
+
+  background: linear-gradient(90deg, #00c7c7 1px, transparent 0) center,
+    linear-gradient(#00c7c7 1px, transparent 0) center, var(--dot-bg);
+  background-image: radial-gradient(var(--dot-color) var(--dot-size), transparent 0);
+  background-size: 40px 40px;
+}
+
+:root {
+  --dot-bg: #F0EFEE;
+  --dot-color: #3C3C3C30;
+}
+.dark .dotted {
+  --dot-color: #262626a0;
+  --dot-bg: #161616;
 }
 </style>
