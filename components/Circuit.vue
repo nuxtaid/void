@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useEventListener, useDebounceFn, useRafFn } from '@vueuse/core'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null
 const particles: Particle[] = []
-let animationFrame: number
+const particlePool: Particle[] = []
 
 interface Speed {
   x: number
@@ -17,7 +18,14 @@ class Particle {
   speed: Speed
   color: string
 
-  constructor(x: number, y: number, speed: Speed, color: string) {
+  constructor(x = 0, y = 0, speed: Speed = { x: 0, y: 0 }, color = '') {
+    this.x = x
+    this.y = y
+    this.speed = speed
+    this.color = color
+  }
+
+  init(x: number, y: number, speed: Speed, color: string) {
     this.x = x
     this.y = y
     this.speed = speed
@@ -47,10 +55,13 @@ class Particle {
   }
 }
 
+const getParticle = () => particlePool.pop() || new Particle()
+
+const recycleParticle = (particle: Particle) => particlePool.push(particle)
+
 const clear = () => {
   if (!ctx || !canvasRef.value) return
   ctx.fillStyle = 'rgba(0,0,0,0.07)'
-  // ctx.fillStyle = 'rgba(22, 22, 22, 0.1)'
   ctx.fillRect(0, 0, canvasRef.value.width, canvasRef.value.height)
 }
 
@@ -59,44 +70,47 @@ const createPulse = () => {
 
   const speed = 7
   const hue = Math.random() * (210 - 150)
-  // const hue = Math.random() * 360
 
   for (let i = 0; i < 56; i++) {
-    particles.push(
-      new Particle(
-        canvasRef.value.width / 2,
-        canvasRef.value.height / 2,
-        {
-          x: Math.cos((i / 8) * 2 * Math.PI) * speed,
-          y: Math.sin((i / 8) * 2 * Math.PI) * speed,
-        },
-        `hsl(${hue},100%,50%)`,
-      ),
+    const particle = getParticle()
+    particle.init(
+      canvasRef.value.width / 2,
+      canvasRef.value.height / 2,
+      {
+        x: Math.cos((i / 8) * 2 * Math.PI) * speed,
+        y: Math.sin((i / 8) * 2 * Math.PI) * speed,
+      },
+      `hsl(${hue},100%,50%)`,
     )
+    particles.push(particle)
   }
 }
 
 const animate = () => {
-  if (!canvasRef.value || !ctx) return
+  if (!ctx || !canvasRef.value) return
 
   clear()
 
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update(ctx)
+  particles.forEach((particle, index) => {
+    particle.update(ctx!)
     if (
-      particles[i].x < 0
-      || particles[i].x > canvasRef.value.width
-      || particles[i].y < 0
-      || particles[i].y > canvasRef.value.height
+      particle.x < 0
+      || particle.x > canvasRef.value!.width
+      || particle.y < 0
+      || particle.y > canvasRef.value!.height
     ) {
-      particles.splice(i, 1)
+      recycleParticle(particles.splice(index, 1)[0])
     }
-  }
-
-  animationFrame = requestAnimationFrame(animate)
+  })
 }
 
-let pulseInterval: NodeJS.Timeout
+// debounced resize function using VueUse
+const resizeCanvas = useDebounceFn(() => {
+  if (canvasRef.value) {
+    canvasRef.value.width = window.innerWidth
+    canvasRef.value.height = window.innerHeight
+  }
+}, 100)
 
 onMounted(() => {
   if (!canvasRef.value) return
@@ -104,23 +118,22 @@ onMounted(() => {
   ctx = canvasRef.value.getContext('2d')
   if (!ctx) return
 
-  const resizeCanvas = () => {
-    if (!canvasRef.value) return
-    canvasRef.value.width = window.innerWidth
-    canvasRef.value.height = window.innerHeight
-  }
-
+  // set initial canvas size
   resizeCanvas()
-  window.addEventListener('resize', resizeCanvas)
 
-  pulseInterval = setInterval(createPulse, 1000)
-  animate()
-})
+  // listen to window resize events
+  useEventListener(window, 'resize', resizeCanvas)
 
-onBeforeUnmount(() => {
-  clearInterval(pulseInterval)
-  cancelAnimationFrame(animationFrame)
-  window.removeEventListener('resize', () => {})
+  // create pulse periodically
+  const pulseInterval = setInterval(createPulse, 1000)
+
+  // animation frame loop
+  const { pause } = useRafFn(animate, { immediate: true })
+
+  onBeforeUnmount(() => {
+    clearInterval(pulseInterval)
+    pause()
+  })
 })
 </script>
 
