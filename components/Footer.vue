@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const { data: navigation } = await useAsyncData('navigation:footer', () => {
   return queryCollectionNavigation('content', ['meta'])
-    // TODO: do something like this instead
-    // .where('meta.footer', '=', true)
+  // TODO: do something like this instead
+  // .where('meta.footer', '=', true)
 }, {
-  transform: (data) => data.filter((item) => item.meta.footer),
+  transform: data => data.filter(item => item.meta.footer),
 })
 </script>
 
@@ -19,7 +19,7 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
           v-for="item, index of navigation"
           :key="index"
           :to="item.path"
-          >
+        >
           {{ item.title }}
         </NuxtLink>
       </div>
