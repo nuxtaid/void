@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: navigation } = await useAsyncData('navigation', () => {
+const { data: navigation } = await useAsyncData('navigation:footer', () => {
   return queryCollectionNavigation('content', ['meta'])
     // TODO: do something like this instead
     // .where('meta.footer', '=', true)

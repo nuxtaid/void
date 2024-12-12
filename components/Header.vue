@@ -5,7 +5,9 @@ const { y } = useWindowScroll()
 
 const route = useRoute()
 
-const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('content'))
+const { data: navigation } = await useAsyncData('navigation:header', () => queryCollectionNavigation('content', ['meta']), {
+  transform: (data) => data.filter((item) => !item.meta.footer),
+})
 
 const typewriter = [
   'cmd + k',
