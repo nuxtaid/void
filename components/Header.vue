@@ -28,7 +28,7 @@ const typewriter = [
       <div class="flex lg:flex-1">
         <NuxtLink
           to="/"
-          class="flex items-center gap-1 -m-1.5 p-1.5"
+          class="flex items-center gap-1 -m-1.5 p-1.5 no-underline"
         >
           <span class="text-xs text-green-500 mr-2">
             ➜

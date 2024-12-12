@@ -19,7 +19,7 @@
     <h1 class="text-4xl text-[#999] title-mask mt-4">
       a passionate <br> Software Engineer
     </h1>
-    <p class="text-lg max-w-3xl text-[#999] font-light mt-4">
+    <p class="text-lg max-w-3xl mt-4">
       who loves learning and crafting code to build cool things. 💻 When I'm not diving deep into the world of software development, I'm probably exploring the great outdoors 🌳
     </p>
   </section>
