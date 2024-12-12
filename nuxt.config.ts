@@ -1,3 +1,7 @@
+import { createResolver } from '@nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
+
 export default defineNuxtConfig({
 
   modules: [
@@ -11,6 +15,15 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
+  },
+
+  components: {
+    dirs: [
+      {
+        prefix: 'V',
+        path: resolve('./components'),
+      },
+    ],
   },
 
   colorMode: {
