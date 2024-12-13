@@ -3,7 +3,7 @@ import { useWebSocket } from '@vueuse/core'
 
 const stats = ref<any>(null)
 
-const { status, data: wsData } = useWebSocket(`ws://${window?.location.host}/api/ws`, {
+const { status, data: wsData } = useWebSocket(`ws://${'192.168.1.120'}/api/ws`, {
   autoReconnect: true,
   // autoReconnect: {
   //   retries: 3,
@@ -73,17 +73,23 @@ const healthScore = computed(() => {
 
   const maxTemperature = 80 // assuming 80°C is the maximum safe temperature
   const maxCpuUsage = 100 // 100% CPU usage is the worst
-  const maxRamUsage = 100 // 100% RAM usage is the worst
-  const maxDiskUsage = 100 // 100% disk usage is the worst
   // const minUptime = 0 // system uptime in minutes
 
-  const temperatureScore = Math.max(0, 100 - (temperature.value / maxTemperature) * 100)
+  // const temperatureScore = Math.max(0, 100 - (temperature.value / maxTemperature) * 100)
+  const temperatureScore = Math.max(0, temperature.value < 50 ? 100 : 100 - ((temperature.value - 50) / (maxTemperature - 50)) * 100)
   const cpuScore = Math.max(0, 100 - (parseFloat(cpuUsage.value) / maxCpuUsage) * 100)
-  const ramScore = Math.max(0, 100 - (parseFloat(ramUsage.value.match(/([\d.]+)/)?.[1] || '0') / maxRamUsage) * 100)
-  const diskScore = Math.max(0, 100 - (parseInt(diskUsage.value.match(/\(([\d]+)%\)/)?.[1] || '0') / maxDiskUsage) * 100)
-  const uptimeScore = Math.min(100, (parseInt(uptime.value) / 1000) * 100) // Assume 1000 minutes is good uptime for now
+  const ramScore = parseFloat(ramUsage.value.match(/([\d.]+)/)?.[1] || '0') < 75 ? 100 : Math.max(0, 100 - ((parseFloat(ramUsage.value.match(/([\d.]+)/)?.[1] || '0') - 75) / 25) * 100)
+  const diskScore = parseInt(diskUsage.value.match(/\(([\d]+)%\)/)?.[1] || '0') < 85 ? 100 : Math.max(0, 100 - ((parseInt(diskUsage.value.match(/\(([\d]+)%\)/)?.[1] || '0') - 85) / 15) * 100)
+  const uptimeScore = Math.min(100, (parseInt(uptime.value) / 5000) * 100) // Assume 5000 minutes is excellent uptime
 
-  return (temperatureScore + cpuScore + ramScore + diskScore + uptimeScore) / 5
+  return (
+    (temperatureScore * 0.2
+      + cpuScore * 0.3
+      + ramScore * 0.2
+      + diskScore * 0.2
+      + uptimeScore * 0.1) // Adjust weights here
+      / 1 // Adjust normalization divisor here
+  )
 })
 
 const totalHealthPartitions = 16
@@ -349,6 +355,5 @@ function getPartitionClass(index: number) {
 .damasanj {
   @apply  bg-gradient-to-r from-cyan-500 via-green-500 to-red-600;
   background-size: 200% 100%;
-  /* background-position: 0% 50%; */
 }
 </style>
