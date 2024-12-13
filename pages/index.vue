@@ -1,6 +1,6 @@
 <template>
   <!-- TODO: make this configurable through app.config -->
-  <section class="flex flex-col justify-center text-center items-center gap-2 mt-40">
+  <section class="flex flex-col justify-center text-center items-center gap-2 lg:mt-40 mt-20 max-w-3xl mx-auto">
     <div class="group relative">
       <img
         class="rounded-full w-40 h-40 border-2 border-[#1A1A1A]"
@@ -19,7 +19,7 @@
     <h1 class="text-4xl text-[#999] title-mask mt-4">
       a passionate <br> Software Engineer
     </h1>
-    <p class="text-lg max-w-3xl mt-4">
+    <p class="text-lg mt-4 px-8">
       who loves learning and crafting code to build cool things. 💻 When I'm not diving deep into the world of software development, I'm probably exploring the great outdoors 🌳
     </p>
   </section>

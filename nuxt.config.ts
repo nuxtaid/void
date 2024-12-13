@@ -26,10 +26,6 @@ export default defineNuxtConfig({
     enabled: false,
   },
 
-	tailwindcss: {
-		viewer: false,
-	},
-
   colorMode: {
     hid: 'color-mode-script',
     globalName: '__COLOR_MODE__',
@@ -37,5 +33,9 @@ export default defineNuxtConfig({
     preference: 'dark',
     fallback: 'dark',
     classSuffix: '',
+  },
+
+  tailwindcss: {
+    viewer: false,
   },
 })

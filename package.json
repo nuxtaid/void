@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "main": "./nuxt.config.ts",
+  "packageManager": "pnpm@9.14.4",
   "scripts": {
     "dev": "nuxi dev .playground --host 0.0.0.0",
     "dev:prepare": "nuxt prepare .playground",
@@ -27,6 +28,5 @@
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@vueuse/core": "^12.0.0",
     "@vueuse/nuxt": "^12.0.0"
-  },
-  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
+  }
 }
