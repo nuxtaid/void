@@ -5,6 +5,8 @@ const { y } = useWindowScroll()
 
 const route = useRoute()
 
+const { open, toggle } = useVHeader()
+
 const { data: navigation } = await useAsyncData('navigation:header', () => queryCollectionNavigation('content', ['meta']), {
   transform: data => data.filter(item => !item.meta.footer),
 })
@@ -18,8 +20,7 @@ const typewriter = [
 <template>
   <header
     class="sticky top-0 z-10 backdrop-blur transition-all duration-300 border-b border-neutral-400/10"
-    :class="[
-    ]"
+    :class="open ? '-translate-x-64' : 'translate-x-0'"
   >
     <nav
       class="mx-auto flex max-w-7xl items-center justify-between transition-all text-[#818181]"
@@ -42,7 +43,18 @@ const typewriter = [
           />
         </NuxtLink>
       </div>
-      <div class="flex gap-x-12">
+
+      <!-- Mobile Menu Toggle Button -->
+      <div class="md:hidden">
+        <button @click="toggle">
+          <Icon
+            class="block w-6 h-6"
+            :name="open ? 'i-ph-x' : 'i-ph-list'"
+          />
+        </button>
+      </div>
+
+      <div class="hidden md:flex gap-x-12">
         <NuxtLink
           v-for="item in navigation"
           :key="item.path"
@@ -54,4 +66,21 @@ const typewriter = [
       </div>
     </nav>
   </header>
+
+  <aside
+    class="fixed top-0 right-0 w-64 h-full bg-[#1f1f1f] border-l border-[#333] z-30 transition-transform duration-300"
+    :class="open ? 'translate-x-0' : 'translate-x-64'"
+  >
+    <nav class="flex flex-col p-4">
+      <NuxtLink
+        v-for="item in navigation"
+        :key="item.path"
+        :to="item.path"
+        class="text-lg py-2"
+        @click="toggle"
+      >
+        {{ item.title }}
+      </NuxtLink>
+    </nav>
+  </aside>
 </template>

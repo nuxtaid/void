@@ -1,8 +1,15 @@
+<script setup lang="ts">
+const { open } = useVHeader()
+</script>
+
 <template>
   <Body class="dark:text-white dotted">
     <main>
       <VHeader />
-      <div class="mb-8">
+      <div
+        class="mb-8 transition-all duration-300"
+        :class="open ? '-translate-x-64' : 'translate-x-0'"
+      >
         <NuxtPage />
       </div>
       <VFooter />
