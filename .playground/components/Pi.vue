@@ -292,7 +292,7 @@ const activeCpuPartitions = computed(() => {
       </div>
     </div>
     <Terminal
-      :info="stats.osInfo"
+      :info="stats?.osInfo"
       class="col-span-7"
     />
   </main>

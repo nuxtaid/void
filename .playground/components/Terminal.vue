@@ -10,7 +10,7 @@ interface TerminalEntry {
 }
 
 const props = defineProps<{
-  info: Record<string, string>
+  info?: Record<string, string>
 }>()
 
 const commandInput = ref('')
@@ -22,9 +22,9 @@ const history = ref<TerminalEntry[]>([
     command: 'whoami',
     output: formatWhoamiOutput({
       name: 'Arash Ari Sheyda',
-      platform: props.info.platform,
-      architecture: props.info.architecture,
-      release: props.info.release,
+      platform: props.info?.platform || '',
+      architecture: props.info?.architecture || '',
+      release: props.info?.release || '',
     }),
     timestamp: new Date().toLocaleTimeString(),
   },
