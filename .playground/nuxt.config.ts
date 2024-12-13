@@ -6,6 +6,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2024-12-11',
 
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+  },
+
   eslint: {
     config: {
       // Use the generated ESLint config for lint root project as well

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// import { useMagicKeys } from '@vueuse/core'
+import { useMagicKeys, onKeyStroke } from '@vueuse/core'
 
-// const { tab } = useMagicKeys()
+const { tab } = useMagicKeys()
 
 interface TerminalEntry {
   command: string
@@ -179,6 +179,13 @@ async function fetchJoke() {
 onMounted(() => {
   const input = document.getElementById('commandInput')
   input?.focus()
+})
+
+onKeyStroke('Tab', (e) => {
+  const input = document.getElementById('commandInput')
+  if (tab.value && input === document.activeElement) {
+    e.preventDefault()
+  }
 })
 </script>
 

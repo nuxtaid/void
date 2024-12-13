@@ -12,7 +12,7 @@ const stats = ref<any>(null)
 //   }
 // })
 
-const { status, data: wsData } = useWebSocket(`ws://192.168.1.120/api/ws/temperature`, {
+const { status, data: wsData } = useWebSocket(`ws://${window?.location.host}/api/ws`, {
   autoReconnect: true,
   // autoReconnect: {
   //   retries: 3,
