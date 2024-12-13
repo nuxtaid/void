@@ -23,8 +23,12 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
+
+	tailwindcss: {
+		viewer: false,
+	},
 
   colorMode: {
     hid: 'color-mode-script',
