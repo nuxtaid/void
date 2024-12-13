@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useWebSocket } from '@vueuse/core'
-
 const stats = ref<any>(null)
 
 const { status, data: wsData } = useWebSocket(`${window?.location.protocol}//${window?.location.host}/api/ws`, {
@@ -113,7 +112,7 @@ function getPartitionClass(index: number) {
 </script>
 
 <template>
-  <div v-if="true">
+  <div v-if="status !== 'OPEN' || !stats?.uptime">
     <Teleport to="#portal">
       <div class="group absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <div class="flex flex-col gap-2 items-center justify-center bg-[#1A1A1A] pb-4 pt-[18px] px-4 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 text-neutral-400 group-hover:border-[#C5184F] w-28">
