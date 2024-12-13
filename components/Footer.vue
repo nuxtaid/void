@@ -12,13 +12,7 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
   <div class="fixed bottom-0 right-0 left-0 backdrop-blur border-t border-neutral-400/10">
     <footer class="mx-auto flex max-w-7xl w-full items-center justify-between transition-all text-[#818181] p-4">
       <div>
-        void by
-        <NuxtLink
-          to="https://github.com/nuxtaid"
-          target="_blank"
-        >
-          NuxtAid
-        </NuxtLink>
+        <VCopyright />
       </div>
       <div class="flex gap-8">
         <NuxtLink
