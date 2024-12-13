@@ -142,14 +142,14 @@ function getPartitionClass(index: number) {
   </div>
   <main
     v-else
-    class="grid grid-cols-12 gap-4 py-10 mx-auto max-w-7xl"
+    class="grid grid-cols-12 gap-4 py-4 mx-auto max-w-7xl"
   >
-    <div class="bg-[#1A1A1A] col-span-9 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 p-8">
+    <div class="bg-[#1A1A1A] lg:col-span-9 col-span-12 overflow-hidden rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 p-8">
       <h1 class="text-2xl font-bold">
         System Stats
       </h1>
 
-      <div class="flex gap-10 mt-8">
+      <div class="grid lg:grid-cols-3 grid-cols-1 lg:gap-2 gap-8 mt-8">
         <div class="flex flex-col">
           <p class="text-neutral-400">
             CPU Usage
@@ -212,7 +212,7 @@ function getPartitionClass(index: number) {
       </div>
     </div>
 
-    <div class="relative col-span-3 overflow-hidden bg-[#1A1A1A] py-10 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
+    <div class="relative lg:col-span-3 col-span-12 overflow-hidden bg-[#1A1A1A] py-10 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
       <div class="absolute z-10 top-0 bottom-0 w-28 left-0 bg-gradient-to-r from-[#1A1A1A] to-transparent" />
       <div class="absolute z-10 top-0 bottom-0 w-28 right-0  bg-gradient-to-l from-[#1A1A1A] to-transparent" />
       <div
@@ -263,7 +263,7 @@ function getPartitionClass(index: number) {
       </div>
     </div>
 
-    <div class="relative col-span-3  overflow-hidden bg-[#1A1A1A] p-8 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
+    <div class="relative lg:col-span-3 col-span-12  overflow-hidden bg-[#1A1A1A] p-8 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
       <h1 class="text-2xl font-bold mb-8 flex items-center gap-2">
         <span>Uptime</span>
         <span class="flex items-center text-green-500">
@@ -281,11 +281,12 @@ function getPartitionClass(index: number) {
         {{ uptime }}
       </p>
     </div>
-    <div class="relative col-span-2 overflow-hidden bg-[#1A1A1A] p-4 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
+
+    <div class="relative lg:col-span-2 col-span-12 flex flex-col justify-center items-center overflow-hidden bg-[#1A1A1A] p-4 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300">
       <h1 class="text-2xl mb-4 text-center">
         Health
       </h1>
-      <div class="relative">
+      <div class="relative inline-block max-w-44 w-full">
         <div class="flex flex-col-reverse items-center gap-2">
           <div
             v-for="i of 15"
@@ -325,9 +326,10 @@ function getPartitionClass(index: number) {
         </p>
       </div>
     </div>
+
     <Terminal
       :info="stats?.osInfo"
-      class="col-span-7"
+      class="lg:col-span-7 col-span-12"
     />
   </main>
 </template>
