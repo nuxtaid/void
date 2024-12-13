@@ -113,31 +113,33 @@ function getPartitionClass(index: number) {
 </script>
 
 <template>
-  <div v-if="status !== 'OPEN' || !stats?.uptime">
-    <div class="group absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-      <div class="flex flex-col gap-2 items-center justify-center bg-[#1A1A1A] pb-4 pt-[18px] px-4 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 text-neutral-400 group-hover:border-[#C5184F] w-28">
-        <Icon
-          class="block w-10 h-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
-          name="i-devicon-plain-raspberrypi"
-        />
-        <Icon
-          class="absolute top-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-11 h-11"
-          name="i-devicon-raspberrypi"
-        />
-        <p class="group-hover:text-yellow-500 select-none transition-color duration-300 max-w-24">
-          PI is <br>
-          <span class="lowercase">
-            {{ status === 'OPEN' ? 'loading': status }}
-          </span>
-        </p>
+  <div v-if="true">
+    <Teleport to="#portal">
+      <div class="group absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+        <div class="flex flex-col gap-2 items-center justify-center bg-[#1A1A1A] pb-4 pt-[18px] px-4 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 text-neutral-400 group-hover:border-[#C5184F] w-28">
+          <Icon
+            class="block w-10 h-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+            name="i-devicon-plain-raspberrypi"
+          />
+          <Icon
+            class="absolute top-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-11 h-11"
+            name="i-devicon-raspberrypi"
+          />
+          <p class="group-hover:text-yellow-500 select-none transition-color duration-300 max-w-24">
+            PI is <br>
+            <span class="lowercase">
+              {{ status === 'OPEN' ? 'loading': status }}
+            </span>
+          </p>
+        </div>
       </div>
-    </div>
-    <ClientOnly>
-      <VCircuit
-        class="absolute inset-0"
-        style="z-index: -1;"
-      />
-    </ClientOnly>
+      <ClientOnly>
+        <VCircuit
+          class="absolute inset-0"
+          style="z-index: -1;"
+        />
+      </ClientOnly>
+    </Teleport>
   </div>
   <main
     v-else

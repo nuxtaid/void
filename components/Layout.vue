@@ -11,8 +11,9 @@ useHead({
 <template>
   <main>
     <VHeader />
+    <div id="portal" />
     <div
-      class="mb-8 transition-all duration-300"
+      class="mb-8 transition-transform duration-300"
       :class="open ? '-translate-x-64' : 'translate-x-0'"
     >
       <slot />
