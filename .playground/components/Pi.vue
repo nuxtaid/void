@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useWebSocket } from '@vueuse/core'
+
 const stats = ref<any>(null)
 
 const { status, data: wsData } = useWebSocket(`${window?.location.protocol}//${window?.location.host}/api/ws`, {

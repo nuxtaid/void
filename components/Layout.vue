@@ -68,4 +68,8 @@ a {
   --dot-color: #262626a0;
   --dot-bg: #161616;
 }
+
+ul {
+  @apply list-disc list-inside ml-4 mb-4;
+}
 </style>
