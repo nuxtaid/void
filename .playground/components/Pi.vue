@@ -3,7 +3,7 @@ import { useWebSocket } from '@vueuse/core'
 
 const stats = ref<any>(null)
 
-const { status, data: wsData } = useWebSocket(`ws://${'192.168.1.120'}/api/ws`, {
+const { status, data: wsData } = useWebSocket(`${window?.location.protocol}//${window?.location.host}/api/ws`, {
   autoReconnect: true,
   // autoReconnect: {
   //   retries: 3,
