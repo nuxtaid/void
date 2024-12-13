@@ -36,9 +36,9 @@ const pages = ['blog', 'resume', 'talks', 'contact', 'pi', 'goals']
 const predefinedCommands: Record<string, any> = {
   whoami: () => formatWhoamiOutput({
     name: 'Arash Ari Sheyda',
-    platform: props.info.platform,
-    architecture: props.info.architecture,
-    release: props.info.release,
+    platform: props.info?.platform || '',
+    architecture: props.info?.architecture || '',
+    release: props.info?.release || '',
   }),
   ls: `<pre>${pages.join('.vue ')}</pre>`,
   pwd: `<pre>/arash/pi</pre>`,
@@ -49,7 +49,7 @@ const predefinedCommands: Record<string, any> = {
 
   // Fun commands
   date: () => new Date().toLocaleString(),
-  uname: () => `<pre>${props.info.platform} ${props.info.architecture} ${props.info.release}</pre>`,
+  uname: () => `<pre>${props.info?.platform} ${props.info?.architecture} ${props.info?.release}</pre>`,
   uptime: '<pre>System uptime: 48 hours, 23 minutes</pre>',
   cd: async () => {
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -177,8 +177,10 @@ async function fetchJoke() {
 }
 
 onMounted(() => {
-  const input = document.getElementById('commandInput')
-  input?.focus()
+  setTimeout(() => {
+    const input = document.getElementById('commandInput')
+    input?.focus()
+  }, 0)
 })
 
 onKeyStroke('Tab', (e) => {
