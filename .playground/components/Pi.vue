@@ -1,16 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
 import { useWebSocket } from '@vueuse/core'
 
 const stats = ref<any>(null)
-
-// const { meta, shift, period } = useMagicKeys()
-
-// watchEffect(() => {
-//   if (meta.value && shift.value && period.value) {
-//     // login
-//   }
-// })
 
 const { status, data: wsData } = useWebSocket(`ws://${window?.location.host}/api/ws`, {
   autoReconnect: true,
@@ -30,15 +21,9 @@ watch(wsData, (message) => {
   if (parsedMessage.status === 'update') {
     stats.value = parsedMessage.stats
   }
-  else {
-    console.error('Unknown message type:', parsedMessage)
-  }
 })
 
-const temperature = computed(() => {
-  if (!stats.value) return 0
-  return stats.value.temperature.replace('°C', '')
-})
+const temperature = computed(() => !stats.value ? 0 : stats.value.temperature === 'Temperature sensor not available' ? 37 : stats.value.temperature.replace('°C', ''))
 const uptime = computed(() => stats.value?.uptime || 'Loading...')
 const ramUsage = computed(() => stats.value?.ramUsage || 'Loading...')
 const cpuUsage = computed(() => stats.value?.cpuUsage || 'Loading...')
@@ -81,6 +66,44 @@ const activeCpuPartitions = computed(() => {
   }
   return 0 // Default to 0 if the string is not in the expected format
 })
+
+// Health calculation based on the system stats (average approach)
+const healthScore = computed(() => {
+  if (!stats.value) return 0
+
+  const maxTemperature = 80 // assuming 80°C is the maximum safe temperature
+  const maxCpuUsage = 100 // 100% CPU usage is the worst
+  const maxRamUsage = 100 // 100% RAM usage is the worst
+  const maxDiskUsage = 100 // 100% disk usage is the worst
+  // const minUptime = 0 // system uptime in minutes
+
+  const temperatureScore = Math.max(0, 100 - (temperature.value / maxTemperature) * 100)
+  const cpuScore = Math.max(0, 100 - (parseFloat(cpuUsage.value) / maxCpuUsage) * 100)
+  const ramScore = Math.max(0, 100 - (parseFloat(ramUsage.value.match(/([\d.]+)/)?.[1] || '0') / maxRamUsage) * 100)
+  const diskScore = Math.max(0, 100 - (parseInt(diskUsage.value.match(/\(([\d]+)%\)/)?.[1] || '0') / maxDiskUsage) * 100)
+  const uptimeScore = Math.min(100, (parseInt(uptime.value) / 1000) * 100) // Assume 1000 minutes is good uptime for now
+
+  return (temperatureScore + cpuScore + ramScore + diskScore + uptimeScore) / 5
+})
+
+const totalHealthPartitions = 16
+function getPartitionClass(index: number) {
+  const filledPartitions = Math.floor((healthScore.value / 100) * totalHealthPartitions)
+
+  if (index <= filledPartitions) {
+    // if (index <= 2) return 'bg-gradient-to-t from-red-600 via-red-600 to-red-300'
+    // if (index <= 7) return 'bg-gradient-to-t from-orange-600 via-orange-600 to-orange-300'
+    // return 'bg-gradient-to-t from-green-600 via-green-600 to-green-300'
+    if (index <= 2) return 'bg-red-600'
+    if (index <= 7) return 'bg-orange-500'
+    return 'bg-green-500'
+  }
+  else {
+    if (index <= 2) return 'bg-red-800/40'
+    if (index <= 7) return 'bg-orange-400/40'
+    return 'bg-green-800/40'
+  }
+}
 </script>
 
 <template>
@@ -188,17 +211,17 @@ const activeCpuPartitions = computed(() => {
       <div
         class="grid grid-cols-100 gap-[14px] items-baseline relative pt-20 transition-transform duration-300"
         :style="{
-          transform: 'translateX(-' + (temperature * 10) + 'px)',
+          transform: 'translateX(-' + (temperature * 11) + 'px)',
         }"
       >
         <div
           v-for="i of 100"
           :key="i"
           class="relative"
-          :class="temperature === i ? 'rounded-sm bg-white' : 'bg-gray-100'"
+          :class="Math.round(temperature) === i ? 'rounded-sm bg-white' : 'bg-gray-100'"
           :style="{
             height: (i % 5 === 0 ? 35 : 20) + 'px',
-            width: temperature === i ? '3px' : '1px',
+            width: Math.round(temperature) === i ? '5px' : '1px',
           }"
         >
           <span
@@ -261,27 +284,31 @@ const activeCpuPartitions = computed(() => {
             v-for="i of 15"
             :key="i"
             class="disk-partition-vertical"
-            :class="i <= 2 ? 'bg-red-500' : i <= 7 ? 'bg-orange-500' : i <= 13 ? 'bg-green-500' : 'bg-green-800'"
+            :class="getPartitionClass(i)"
           >
             <div
-              v-if="i <= 15"
+              v-if="i <= Math.floor((healthScore / 100) * totalHealthPartitions)"
               class="absolute disk-partition-vertical blur-sm"
-              :class="i <= 2 ? 'bg-red-500' : i <= 7 ? 'bg-orange-500' : i <= 13 ? 'bg-green-500' : ''"
+              :class="getPartitionClass(i)"
             />
           </div>
         </div>
-        <div class="absolute right-0 top-2 flex flex-col items-center">
-          <div class="flex">
-            <span class="text-4xl">
-              95
+        <div
+          class="absolute -right-2 bottom-0 top-0 flex flex-col items-center"
+        >
+          <div
+            class="flex h-full"
+            :style="{
+              transform: 'translateY(' + ((100 - healthScore) * 0.85) + '%)',
+            }"
+          >
+            <span class="text-3xl">
+              {{ Math.round(healthScore) }}
             </span>
             <span>
               %
             </span>
           </div>
-          <span class="text-xl font-thin">
-            Great
-          </span>
         </div>
         <p class="absolute left-8 -bottom-1">
           0%
