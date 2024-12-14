@@ -2,6 +2,8 @@
 const { open } = useVHeader()
 
 useHead({
+  title: 'empty',
+  titleTemplate: '%s - Void',
   bodyAttrs: {
     class: 'dark:text-white dotted',
   },

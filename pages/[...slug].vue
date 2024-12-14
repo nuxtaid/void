@@ -1,6 +1,17 @@
 <script setup lang="ts">
 const route = useRoute()
 const { data: page } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
+
+const { title, description } = page.value || {}
+const metaHead = page.value?.meta.head?.meta || {}
+useSeoMeta({
+  title: metaHead.title || title,
+  description: metaHead.description || description,
+  ogTitle: metaHead.ogTitle || metaHead.title || title,
+  ogDescription: metaHead.ogDescription || metaHead.description || description,
+  twitterTitle: metaHead.twitterTitle || metaHead.title || title,
+  twitterDescription: metaHead.twitterDescription || metaHead.description || description,
+})
 </script>
 
 <template>
