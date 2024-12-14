@@ -4,7 +4,7 @@ const { data: page } = await useAsyncData(route.path, () => queryCollection('con
 </script>
 
 <template>
-  <div class="container mx-auto max-w-7xl w-full px-4 py-8">
+  <div class="container mx-auto max-w-7xl w-full">
     <template v-if="page">
       <div
         v-if="page.meta.heading !== false"
