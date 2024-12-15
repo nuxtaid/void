@@ -50,19 +50,23 @@ export default defineWebSocketHandler({
         peer.send(JSON.stringify({ status: 'xmastree-error', message: 'Error: Invalid token.' }))
         return
       }
+
+      if (!pythonProcess) {
+        const rootDirectory = process.cwd()
+        console.log(`${rootDirectory}/scripts/rgb.py`)
+        pythonProcess = spawn('python', [
+          '/home/arash/Developer/projects/void/scripts/rgb.py',
+          '--brightness', '1',
+        ])
+        peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree started.' }))
+        return
+      }
       if (pythonProcess) {
-        pythonProcess.kill()
+        pythonProcess.kill('SIGINT')
         pythonProcess = null
         peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree stopped.' }))
-      } else {
-				 const rootDirectory = process.cwd()
-				 console.log(`${rootDirectory}/scripts/rgb.py`)
-				 pythonProcess = spawn('python', [
-					'/home/arash/Developer/projects/void/scripts/rgb.py',
-					'--brightness', '1',
-				])
-				peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree started.' }))
-			}
+        return
+      }
     }
 
     if (action === 'getStats') {
@@ -91,7 +95,7 @@ export default defineWebSocketHandler({
   },
   close(peer) {
     stopUpdatesForPeer(peer)
-		if (pythonProcess) {
+    if (pythonProcess) {
       pythonProcess.kill('SIGINT')
       pythonProcess = null
     }
