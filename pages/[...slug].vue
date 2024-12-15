@@ -12,6 +12,10 @@ useSeoMeta({
   twitterTitle: metaHead.twitterTitle || metaHead.title || title,
   twitterDescription: metaHead.twitterDescription || metaHead.description || description,
 })
+
+defineOgImage({
+  component: 'OgImageTerminal',
+})
 </script>
 
 <template>

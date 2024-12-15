@@ -36,12 +36,21 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
+  experimental: {
+    componentIslands: true,
+  },
+
   // @nuxtjs/seo modules
   linkChecker: {
     enabled: false,
   },
   ogImage: {
-    enabled: false,
+    enabled: true,
+    strictNuxtContentPaths: true,
+    fonts: [
+      // monospace
+      'Space+Mono:400',
+    ],
   },
   robots: {
     enabled: false,
