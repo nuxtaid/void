@@ -12,5 +12,5 @@ try:
             tree.color = color
             sleep(1)
 except KeyboardInterrupt:
-    tree.close()
     tree.off()
+    tree.close()

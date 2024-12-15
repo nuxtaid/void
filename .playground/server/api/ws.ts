@@ -54,15 +54,15 @@ export default defineWebSocketHandler({
         pythonProcess.kill()
         pythonProcess = null
         peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree stopped.' }))
-        return
-      }
-      const rootDirectory = process.cwd()
-      pythonProcess = spawn('python', [
-        `${rootDirectory}/scripts/rgb.py`,
-        '--brightness', '1',
-      ])
-      peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree started.' }))
-      return
+      } else {
+				 const rootDirectory = process.cwd()
+				 console.log(`${rootDirectory}/scripts/rgb.py`)
+				 pythonProcess = spawn('python', [
+					'/home/arash/Developer/projects/void/scripts/rgb.py',
+					'--brightness', '1',
+				])
+				peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree started.' }))
+			}
     }
 
     if (action === 'getStats') {
@@ -91,6 +91,10 @@ export default defineWebSocketHandler({
   },
   close(peer) {
     stopUpdatesForPeer(peer)
+		if (pythonProcess) {
+      pythonProcess.kill('SIGINT')
+      pythonProcess = null
+    }
     peer.send(
       JSON.stringify({
         status: 'disconnected',
