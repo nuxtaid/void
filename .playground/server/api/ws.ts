@@ -171,25 +171,30 @@ async function getCpuUsage() {
     const startUsage = os.cpus()
     setTimeout(() => {
       const endUsage = os.cpus()
-      const cpuPercentage = endUsage.map((end, i) => {
-        const start = startUsage[i]
-        const totalStart = Object.values(start.times).reduce(
-          (acc, t) => acc + t,
-          0,
-        )
-        const totalEnd = Object.values(end.times).reduce(
-          (acc, t) => acc + t,
-          0,
-        )
-        const idle = end.times.idle - start.times.idle
-        const total = totalEnd - totalStart
-        return ((1 - idle / total) * 100).toFixed(2)
+      let totalStart = 0
+      let totalEnd = 0
+      let idleStart = 0
+      let idleEnd = 0
+
+      // Calculate total and idle time for each CPU core
+      startUsage.forEach((cpu, i) => {
+        const end = endUsage[i]
+        totalStart += Object.values(cpu.times).reduce((acc, t) => acc + t, 0)
+        totalEnd += Object.values(end.times).reduce((acc, t) => acc + t, 0)
+        idleStart += cpu.times.idle
+        idleEnd += end.times.idle
       })
-      const avgCpuUsage = (
-        cpuPercentage.reduce((acc, v) => acc + parseFloat(v), 0)
-        / cpuPercentage.length
-      ).toFixed(2)
-      resolve(`${avgCpuUsage}%`)
+
+      // Calculate CPU usage percentage
+      const idle = idleEnd - idleStart
+      const total = totalEnd - totalStart
+      const cpuUsagePercentage = ((1 - idle / total) * 100).toFixed(2)
+
+      // Get CPU total time and used time
+      const totalCpuTime = (total / 1000).toFixed(2) // Convert to seconds
+      const usedCpuTime = ((total - idle) / 1000).toFixed(2) // Convert to seconds
+
+      resolve(`${usedCpuTime} / ${totalCpuTime} (${cpuUsagePercentage}%)`)
     }, 1000)
   })
 }

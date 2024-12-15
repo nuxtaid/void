@@ -62,11 +62,14 @@ const activeRamPartitions = computed(() => {
 })
 
 const activeCpuPartitions = computed(() => {
-  const match = cpuUsage.value.match(/^CPU Usage: ([\d.]+)%$/)
+  const match = cpuUsage.value.match(/^([\d.]+) \/ [\d.]+ \(([\d.]+)%\)$/)
   if (match) {
-    const percentageUsed = parseFloat(match[1])
+    // const used = parseFloat(match[1])
+    // const total = parseFloat(match[3])
+    const percentageUsed = parseInt(match[2])
+    console.log(percentageUsed)
 
-    // Adjust the number of active partitions based on 10 partitions
+    // Calculate the number of active partitions based on percentage used
     return Math.round((percentageUsed / 100) * parts)
   }
   return 0 // Default to 0 if the string is not in the expected format
