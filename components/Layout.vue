@@ -2,6 +2,8 @@
 const { open } = useVHeader()
 
 useHead({
+  title: 'empty',
+  titleTemplate: '%s - Void',
   bodyAttrs: {
     class: 'dark:text-white dotted',
   },
@@ -13,7 +15,7 @@ useHead({
     <VHeader />
     <div id="portal" />
     <div
-      class="mb-8 transition-transform duration-300"
+      class="mb-8 px-4 py-8 transition-transform duration-300"
       :class="open ? '-translate-x-64' : 'translate-x-0'"
     >
       <slot />

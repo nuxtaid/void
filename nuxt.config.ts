@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/icon',
+    '@nuxtjs/seo',
     '@nuxt/fonts',
     '@vueuse/nuxt',
     '@nuxt/content',
@@ -33,6 +34,35 @@ export default defineNuxtConfig({
     preference: 'dark',
     fallback: 'dark',
     classSuffix: '',
+  },
+
+  experimental: {
+    componentIslands: true,
+  },
+
+  // @nuxtjs/seo modules
+  linkChecker: {
+    enabled: false,
+  },
+  ogImage: {
+    enabled: true,
+    strictNuxtContentPaths: true,
+    fonts: [
+      // monospace
+      'Space+Mono:400',
+    ],
+  },
+  robots: {
+    enabled: false,
+  },
+  schemaOrg: {
+    enabled: true,
+  },
+  seo: {
+    enabled: true,
+  },
+  sitemap: {
+    enabled: false,
   },
 
   tailwindcss: {

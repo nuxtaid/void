@@ -1,10 +1,25 @@
 <script setup lang="ts">
 const route = useRoute()
 const { data: page } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
+
+const { title, description } = page.value || {}
+const metaHead = page.value?.meta.head?.meta || {}
+useSeoMeta({
+  title: metaHead.title || title,
+  description: metaHead.description || description,
+  ogTitle: metaHead.ogTitle || metaHead.title || title,
+  ogDescription: metaHead.ogDescription || metaHead.description || description,
+  twitterTitle: metaHead.twitterTitle || metaHead.title || title,
+  twitterDescription: metaHead.twitterDescription || metaHead.description || description,
+})
+
+defineOgImage({
+  component: 'OgImageTerminal',
+})
 </script>
 
 <template>
-  <div class="container mx-auto max-w-7xl w-full px-4 py-8">
+  <div class="container mx-auto max-w-7xl w-full">
     <template v-if="page">
       <div
         v-if="page.meta.heading !== false"
