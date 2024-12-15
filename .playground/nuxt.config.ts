@@ -4,6 +4,13 @@ export default defineNuxtConfig({
   extends: ['..'],
   modules: ['@nuxt/eslint'],
 
+  runtimeConfig: {
+    totp: {
+      secret: process.env.TOTP_SECRET,
+      qr: process.env.TOTP_QR,
+    },
+  },
+
   compatibilityDate: '2024-12-11',
 
   nitro: {

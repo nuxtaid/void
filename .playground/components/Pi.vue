@@ -2,9 +2,10 @@
 import { useWebSocket } from '@vueuse/core'
 
 const stats = ref<any>(null)
+const treeStatus = ref()
 
-const { status, data: wsData } = useWebSocket(`${window?.location.protocol === 'http:' ? 'ws' : 'wss'}://${window?.location.host}/api/ws`, {
-  // autoReconnect: true,
+const { status, data, send } = useWebSocket(`${window?.location.protocol === 'http:' ? 'ws' : 'wss'}://${window?.location.host}/api/ws`, {
+  autoReconnect: true,
   // autoReconnect: {
   //   retries: 3,
   //   delay: 1000,
@@ -15,10 +16,14 @@ const { status, data: wsData } = useWebSocket(`${window?.location.protocol === '
   // },
 })
 
-watch(wsData, (message) => {
+watch(data, (message) => {
   if (!message) return
   const parsedMessage = JSON.parse(message)
-  if (parsedMessage.status === 'update') {
+
+  if (parsedMessage.status?.includes('xmastree-')) {
+    treeStatus.value = parsedMessage.message
+  }
+  else if (parsedMessage.status === 'update') {
     stats.value = parsedMessage.stats
   }
 })
@@ -109,6 +114,11 @@ function getPartitionClass(index: number) {
     if (index <= 7) return 'bg-orange-400/40'
     return 'bg-green-800/40'
   }
+}
+
+const token = ref('')
+async function switchTree() {
+  send(JSON.stringify({ action: 'xmastree', token: token.value }))
 }
 </script>
 
@@ -332,6 +342,34 @@ function getPartitionClass(index: number) {
       :info="stats?.osInfo"
       class="lg:col-span-7 col-span-12"
     />
+
+    <div class="relative lg:col-span-12 col-span-12 flex items-center gap-10 overflow-hidden bg-[#1A1A1A] p-8 rounded-lg border border-[#2A2A29] hover:border-neutral-400/40 transition-border duration-300 h-72">
+      <!-- <div v-if="typeof qr === 'string' && qr?.startsWith('data:image/png;base64')">
+      <img
+        :src="qr"
+        class="rounded-lg border border-[#2A2A29]"
+      >
+    </div> -->
+      <img
+        ref="treeAbsolute"
+        class="absolute -top-12 -right-36 h-[450px] w-[450px]"
+        src="/assets/tree.png"
+      >
+      <div class="flex flex-col gap-4 mt-10">
+        <input
+          v-model="token"
+          placeholder="Enter TOTP Code"
+          class="bg-black border-neutral-400/40 p-2 rounded-lg"
+        >
+        <button
+          class="p-4 rounded-lg border border-neutral-400/20 hover:border-green-500 hover:text-green-500"
+          @click="switchTree"
+        >
+          Switch 🎄
+        </button>
+        {{ treeStatus }}
+      </div>
+    </div>
   </main>
 </template>
 

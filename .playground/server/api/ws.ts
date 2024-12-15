@@ -1,6 +1,6 @@
 import os from 'os'
 import fs from 'fs'
-import { execSync } from 'child_process'
+import { execSync, spawn } from 'child_process'
 
 const updateInterval = 1000 // Update every 1 second
 const activePeers = new Map()
@@ -12,6 +12,8 @@ const osInfo = {
   architecture: os.arch(), // e.g., 'x64', 'arm', 'arm64'
   hostname: os.hostname(),
 }
+
+let pythonProcess: any = null
 
 export default defineWebSocketHandler({
   open(peer) {
@@ -31,7 +33,37 @@ export default defineWebSocketHandler({
     )
   },
   async message(peer, message) {
-    const { action } = JSON.parse(message.text())
+    const { action, token } = JSON.parse(message.text())
+
+    if (action === 'xmastree') {
+      if (!token) {
+        peer.send(JSON.stringify({ status: 'xmastree-error', message: 'Error: Missing token.' }))
+        return
+      }
+      const { verified } = await $fetch('/api/auth/totp/verify', {
+        method: 'POST',
+        body: {
+          token,
+        },
+      })
+      if (!verified) {
+        peer.send(JSON.stringify({ status: 'xmastree-error', message: 'Error: Invalid token.' }))
+        return
+      }
+      if (pythonProcess) {
+        pythonProcess.kill()
+        pythonProcess = null
+        peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree stopped.' }))
+        return
+      }
+      const rootDirectory = process.cwd()
+      pythonProcess = spawn('python', [
+        `${rootDirectory}/scripts/rgb.py`,
+        '--brightness', '1',
+      ])
+      peer.send(JSON.stringify({ status: 'xmastree-success', message: 'Success: Xmas tree started.' }))
+      return
+    }
 
     if (action === 'getStats') {
       try {
