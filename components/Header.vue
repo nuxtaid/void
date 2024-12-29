@@ -60,6 +60,7 @@ const typewriter = [
           :key="item.path"
           :to="item.path"
           class="text-sm no-underline"
+          :class="{ 'text-cyan-500': route.path.includes(item.path) }"
         >
           {{ item.title }}
         </NuxtLink>
