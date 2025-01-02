@@ -13,8 +13,13 @@ const props = defineProps<{
   info?: Record<string, string>
 }>()
 
+const emit = defineEmits<{
+  close: () => void
+}>()
+
 const commandInput = ref('')
 
+const route = useRoute()
 const router = useRouter()
 
 const history = ref<TerminalEntry[]>([
@@ -41,7 +46,7 @@ const predefinedCommands: Record<string, any> = {
     release: props.info?.release || '',
   }),
   ls: `<pre>${pages.join('.vue ')}</pre>`,
-  pwd: `<pre>/arash/pi</pre>`,
+  pwd: `<pre>${route.fullPath === '/' ? '~' : route.fullPath}</pre>`,
   clear: () => {
     history.value = []
     return ''
@@ -195,8 +200,14 @@ onKeyStroke('Tab', (e) => {
   <div class="bg-[#1A1A1A] border border-[#2A2A29] rounded-lg h-72">
     <div class="relative h-8 rounded-t-lg flex items-center bg-neutral-400/5">
       <div class="absolute left-4 flex gap-2">
-        <div class="w-3 h-3 rounded-full bg-red-500" />
-        <div class="w-3 h-3 rounded-full bg-yellow-500" />
+        <div
+          class="w-3 h-3 rounded-full bg-red-500 cursor-pointer"
+          @click="emit('close')"
+        />
+        <div
+          class="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer"
+          @click="emit('close')"
+        />
         <div class="w-3 h-3 rounded-full bg-green-500" />
       </div>
       <div class="flex-1 text-center text-terminal-text text-sm font-medium">

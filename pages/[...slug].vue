@@ -46,6 +46,7 @@ defineOgImage({
       <ContentRenderer
         v-if="page.body.value?.length"
         :value="page"
+        class="p-4"
       />
       <div v-else>
         <p>Page is empty</p>

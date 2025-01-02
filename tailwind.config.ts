@@ -16,4 +16,10 @@ export default <Partial<Config>>{
       },
     },
   },
+  safelist: [
+    {
+      pattern: /^grid-cols-[0-9]+$/,
+      variants: ['lg'],
+    },
+  ],
 }

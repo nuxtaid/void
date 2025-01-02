@@ -1,9 +1,11 @@
 <script setup lang="ts">
 const { open } = useVHeader()
 
+const config = useVoid()
+
 useHead({
-  title: 'empty',
-  titleTemplate: '%s - Void',
+  title: config.title.replace(/<\/?[^>]+(>|$)/g, ''),
+  titleTemplate: `%s - ${config.name}`,
   bodyAttrs: {
     class: 'dark:text-white dotted',
   },
@@ -13,6 +15,7 @@ useHead({
 <template>
   <main>
     <VHeader />
+    <VSearchBox />
     <div id="portal" />
     <div
       class="mb-8 px-4 py-8 transition-transform duration-300"
@@ -71,7 +74,7 @@ a {
   --dot-bg: #161616;
 }
 
-ul {
-  @apply list-disc list-inside ml-4 mb-4;
+hr {
+  @apply my-4 border-t border-neutral-400/40;
 }
 </style>

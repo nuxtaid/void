@@ -3,9 +3,9 @@ const config = useVoid()
 </script>
 
 <template>
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-6">
     <NuxtLink
-      v-for="item in config.socials"
+      v-for="item in Array.isArray(config.socials) ? config.socials : config.socials.items"
       :key="item.url"
       class="social-item"
       :to="item.url"
@@ -16,7 +16,6 @@ const config = useVoid()
       <Icon
         :name="item.icon"
         :class="item.title"
-        transition-all
         :style="{ '--void-social-hover': item.color }"
       />
     </NuxtLink>
@@ -24,8 +23,9 @@ const config = useVoid()
 </template>
 
 <style>
-.social-item:hover svg {
+.social-item:hover span {
+  /* color: var(--void-social-hover); */
   color: var(--void-social-hover);
-  filter: drop-shadow(0 0 0.75rem var(--void-social-hover));
+  /* filter: drop-shadow(0 0 0.75rem var(--void-social-hover)); */
 }
 </style>
