@@ -3,6 +3,8 @@ import { useWindowScroll } from '@vueuse/core'
 
 const { y } = useWindowScroll()
 
+const config = useVoid()
+
 const route = useRoute()
 
 const { open, toggle } = useVHeader()
@@ -54,15 +56,17 @@ const typewriter = [
         </button>
       </div>
 
-      <div class="hidden md:flex gap-x-12">
+      <div class="hidden md:flex gap-x-8">
         <NuxtLink
           v-for="item in navigation"
           :key="item.path"
           :to="item.path"
           class="text-sm no-underline"
+          :class="{ 'text-cyan-500': route.path.includes(item.path) }"
         >
           {{ item.title }}
         </NuxtLink>
+        <VSocials v-if="config.socials?.header !== false" />
       </div>
     </nav>
   </header>
