@@ -31,7 +31,7 @@ const filtered = computed(() => {
 </script>
 
 <template>
-  <ol class="p-4">
+  <ol class="md:p-4 p-2">
     <li
       v-for="item, index in filtered"
       :key="index"

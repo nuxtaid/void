@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div
-    :class="{ 'p-4': padding !== 'false' }"
+    :class="{ 'md:p-4': padding !== 'false' }"
   >
     <h2
       v-if="title"
