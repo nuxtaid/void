@@ -15,7 +15,7 @@ const { data: navigation } = await useAsyncData('navigation:header', () => query
 
 const typewriter = [
   'cmd + k',
-  'hi@arash.is',
+  'hi@arashsheyda.me',
 ]
 </script>
 

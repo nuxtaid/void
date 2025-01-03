@@ -30,7 +30,7 @@ function textGlow(color: string) {
         class="sm font-medium"
         :style="textGlow('#fff')"
       >
-        pi@arash.is
+        pi@arashsheyda.me
       </div>
       <div class="absolute right-4 top-2 flex flex-row gap-2">
         <!-- icon ? -->
@@ -56,7 +56,7 @@ function textGlow(color: string) {
           class="text-yellow-500 mr-4"
           :style="textGlow('#EBB305')"
         >
-          pi@arash.is
+          pi@arashsheyda.me
         </span>
         <span
           class="text-green-500"
