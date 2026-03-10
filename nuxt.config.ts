@@ -46,7 +46,6 @@ export default defineNuxtConfig({
   },
   ogImage: {
     enabled: true,
-    strictNuxtContentPaths: true,
     fonts: [
       // monospace
       'Space+Mono:400',
