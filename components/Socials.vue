@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-const config = useVoid()
+const { socials } = useVoid()
 </script>
 
 <template>
   <div class="flex items-center gap-6">
     <NuxtLink
-      v-for="item in Array.isArray(config.socials) ? config.socials : config.socials.items"
+      v-for="item in Array.isArray(socials) ? socials : socials.items"
       :key="item.url"
       class="social-item"
       :to="item.url"
