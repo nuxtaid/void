@@ -17,6 +17,7 @@ defineProps<{
       <Icon
         v-if="icon"
         :name="icon"
+        aria-hidden="true"
       />
       {{ title }}
     </h2>

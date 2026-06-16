@@ -48,9 +48,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="typewriter">
+  <div
+    class="typewriter"
+    aria-live="polite"
+    role="status"
+  >
     <span class="typing-text">{{ currentText }}</span>
-    <span class="animate-blink">|</span>
+    <span
+      class="animate-blink"
+      aria-hidden="true"
+    >|</span>
   </div>
 </template>
 

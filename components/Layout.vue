@@ -13,18 +13,26 @@ useHead({
 </script>
 
 <template>
-  <main>
+  <div>
+    <NuxtLink
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-cyan-600 focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+    >
+      Skip to main content
+    </NuxtLink>
     <VHeader />
     <VSearchBox />
     <div id="portal" />
     <div
+      id="main-content"
+      role="main"
       class="mb-8 px-4 py-8 transition-transform duration-300"
       :class="open ? '-translate-x-64' : 'translate-x-0'"
     >
       <slot />
     </div>
     <VFooter />
-  </main>
+  </div>
 </template>
 
 <style>
@@ -76,5 +84,22 @@ a {
 
 hr {
   @apply my-4 border-t border-neutral-400/40;
+}
+
+*:focus-visible {
+  outline: 2px solid #00c7c7;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 </style>

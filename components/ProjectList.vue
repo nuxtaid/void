@@ -26,16 +26,18 @@ defineProps<{
         {{ category.title }}
       </h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2">
-        <a
+        <NuxtLink
           v-for="project in category.projects"
           :key="project.name"
           :href="project.url"
           target="_blank"
+          rel="noopener noreferrer"
           class="group flex items-start gap-2 py-2 no-underline opacity-80 hover:opacity-100 transition-opacity"
         >
           <Icon
             v-if="project.icon"
             :name="project.icon"
+            aria-hidden="true"
             class="mt-1 w-5 h-5 flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity"
           />
           <div class="min-w-0">
@@ -49,7 +51,7 @@ defineProps<{
               {{ project.description }}
             </div>
           </div>
-        </a>
+        </NuxtLink>
       </div>
     </section>
   </div>

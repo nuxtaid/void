@@ -21,18 +21,26 @@ const filteredGreeting = computed(() => props.greeting || config.greeting)
       <img
         class="rounded-full w-40 h-40 object-cover border-2 border-[#1A1A1A]"
         :src="filteredAvatar"
+        :alt="filteredTitle ? `Avatar of ${filteredTitle.replace(/<[^>]*>/g, '')}` : 'Profile avatar'"
       >
       <div
         v-if="config.location"
         class="flex gap-1 items-center absolute bottom-1 left-28 bg-[#1A1A1A] px-2 text-sm py-1 rounded-full border border-neutral-400/10"
       >
         <span class="mt-[2px]">{{ config.location.flag }}</span>
-        <span class="group-hover:block whitespace-nowrap hidden">
+        <span class="sr-only">{{ config.location.city }}</span>
+        <span
+          class="group-hover:block whitespace-nowrap hidden"
+          aria-hidden="true"
+        >
           {{ config.location.city }}
         </span>
       </div>
     </div>
-    <span v-if="filteredGreeting" class="text-[#999]">
+    <span
+      v-if="filteredGreeting"
+      class="text-[#999]"
+    >
       {{ filteredGreeting }}
     </span>
     <h1

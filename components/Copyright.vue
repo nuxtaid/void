@@ -8,6 +8,7 @@ const copyright = computed(() => config.copyright || {})
   <NuxtLink
     :to="copyright.url || 'https://github.com/nuxtaid'"
     target="_blank"
+    rel="noopener noreferrer"
   >
     {{ copyright.author || 'NuxtAid' }}
   </NuxtLink>

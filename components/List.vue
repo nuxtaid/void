@@ -38,15 +38,21 @@ const { data, error } = await useAsyncData(`navigation:${props.fetch}`, () => {
       >
         {{ item.title }}
       </NuxtLink>
-      <div class="text-right flex gap-4">
+      <div
+        class="text-right flex gap-4"
+        role="list"
+        aria-label="Tags"
+      >
         <div
           v-for="tag of item.meta.tags"
           :key="tag"
+          role="listitem"
           class="grayscale group-hover:grayscale-0 hover:scale-125 transition-transform duration-300"
         >
           <Icon
             class="block w-5"
             :name="tag"
+            :aria-label="tag"
           />
         </div>
       </div>

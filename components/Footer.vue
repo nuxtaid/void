@@ -14,7 +14,10 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
       <div>
         <VCopyright />
       </div>
-      <div class="flex gap-8">
+      <nav
+        aria-label="Footer navigation"
+        class="flex gap-8"
+      >
         <NuxtLink
           v-for="item, index of navigation"
           :key="index"
@@ -23,7 +26,7 @@ const { data: navigation } = await useAsyncData('navigation:footer', () => {
         >
           {{ item.title }}
         </NuxtLink>
-      </div>
+      </nav>
     </footer>
   </div>
 </template>

@@ -30,6 +30,7 @@ defineOgImage({
           <icon
             v-if="page.meta.icon"
             class="block"
+            aria-hidden="true"
             :name="page.meta.icon"
           />
         </h1>
@@ -40,6 +41,7 @@ defineOgImage({
       >
         <img
           :src="page.meta.image"
+          :alt="page.title || 'Page illustration'"
           class="rounded-lg aspect-video max-w-6xl"
         >
       </div>

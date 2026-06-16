@@ -256,21 +256,29 @@ onKeyStroke('Tab', (e) => {
   <div class="bg-[#1A1A1A] border border-[#2A2A29] rounded-lg h-72">
     <div class="relative h-8 rounded-t-lg flex items-center bg-neutral-400/5">
       <div class="absolute left-4 flex gap-2">
-        <div
-          class="w-3 h-3 rounded-full bg-red-500 cursor-pointer"
+        <button
+          class="w-3 h-3 rounded-full bg-red-500 cursor-pointer border-0 p-0"
+          aria-label="Close terminal"
+          @click="emit('close')"
+        />
+        <button
+          class="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer border-0 p-0"
+          aria-label="Minimize terminal"
           @click="emit('close')"
         />
         <div
-          class="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer"
-          @click="emit('close')"
+          class="w-3 h-3 rounded-full bg-green-500"
+          aria-hidden="true"
         />
-        <div class="w-3 h-3 rounded-full bg-green-500" />
       </div>
       <div class="flex-1 text-center text-terminal-text text-sm font-medium">
         pi@arash.is
       </div>
       <div class="absolute right-4 flex gap-2">
-        <Icon name="i-devicon-plain-raspberrypi" />
+        <Icon
+          name="i-devicon-plain-raspberrypi"
+          aria-hidden="true"
+        />
         <!-- <Icon name="i-devicon-plain-debian" /> -->
       </div>
     </div>
@@ -299,6 +307,10 @@ onKeyStroke('Tab', (e) => {
       <div class="relative flex items-center text-green-400">
         <span class="mr-2">➜</span>
         <span class="text-cyan-400">~pi</span>
+        <label
+          for="commandInput"
+          class="sr-only"
+        >Terminal command input</label>
         <input
           id="commandInput"
           v-model="commandInput"
@@ -306,6 +318,7 @@ onKeyStroke('Tab', (e) => {
           class="flex-1 ml-2 bg-transparent text-terminal-text font-mono focus:outline-none"
           placeholder="Enter command..."
           :disabled="isExecuting"
+          autocomplete="off"
           @keyup.enter="executeCommand"
         >
         <p class="absolute top-0 right-0 text-xs">
