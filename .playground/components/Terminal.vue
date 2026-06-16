@@ -35,7 +35,7 @@ const history = ref<TerminalEntry[]>([
   },
 ])
 
-const pages = ['blog', 'resume', 'talks', 'contact', 'pi', 'goals']
+const pages = ['blog', 'resume', 'talks', 'contact', 'pi', 'goals', 'activity']
 
 // Define predefined commands and their outputs
 const predefinedCommands: Record<string, any> = {
@@ -56,6 +56,62 @@ const predefinedCommands: Record<string, any> = {
   date: () => new Date().toLocaleString(),
   uname: () => `<pre>${props.info?.platform} ${props.info?.architecture} ${props.info?.release}</pre>`,
   uptime: '<pre>System uptime: 48 hours, 23 minutes</pre>',
+
+  // Easter eggs
+  matrix: () => {
+    return `<pre style="color:#00ff00;font-size:10px;line-height:1.1">
+ ╔══════════════════════════════════════╗
+ ║  Wake up, Neo...                    ║
+ ║  The Matrix has you...              ║
+ ║  Follow the white rabbit.           ║
+ ║                                     ║
+ ║  🐇                                 ║
+ ╚══════════════════════════════════════╝
+    </pre>`
+  },
+  sudo: () => '<pre style="color:#ff6b6b">Nice try. 🔒 Permission denied.</pre>',
+  vim: () => '<pre>How do I exit this thing?! Try :q! ... just kidding, we use VS Code here.</pre>',
+  emacs: () => '<pre>M-x butterfly 🦋</pre>',
+  coffee: () => {
+    const coffees = [
+      '<pre>☕ Brewing a fresh cup of TypeScript...</pre>',
+      '<pre>☕ Here\'s your coffee. Now ship that feature.</pre>',
+      '<pre>☕ Coffee loading... ████████████ 100% ✓</pre>',
+      '<pre>☕ Error: coffee.exe has stopped working. Try tea?</pre>',
+    ]
+    return coffees[Math.floor(Math.random() * coffees.length)]
+  },
+  hi: () => '<pre>👋 Hey there! Type "help" to see what I can do.</pre>',
+  hello: () => '<pre>👋 Hello, world! console.log("Nice to meet you")</pre>',
+  github: () => '<pre>→ <a href="https://github.com/arashsheyda" target="_blank" style="color:#58a6ff;text-decoration:underline">github.com/arashsheyda</a></pre>',
+  twitter: () => '<pre>→ <a href="https://twitter.com/arash_sheyda" target="_blank" style="color:#1DA1F2;text-decoration:underline">@arash_sheyda</a></pre>',
+  hire: () => '<pre style="color:#00ff88">📧 Let\'s talk! Reach me at hi@arashsheyda.me\n\nI\'m interested in design systems, open source, and developer tooling.</pre>',
+  skills: () => `<pre>
+┌──────────────────────────────────────┐
+│  Vue/Nuxt    ████████████████░░  90% │
+│  TypeScript  ███████████████░░░  85% │
+│  React       ██████████░░░░░░░░  55% │
+│  CSS/HTML    ████████████████░░  90% │
+│  Node.js     ██████████████░░░░  75% │
+│  Design Sys  ████████████████░░  90% │
+│  Git         ████████████████░░  90% │
+│  DevTools    █████████████████░  95% │
+└──────────────────────────────────────┘
+  </pre>`,
+  konami: () => '<pre style="color:#FFD700">🎮 ↑ ↑ ↓ ↓ ← → ← → B A — You found the Konami code! +30 lives</pre>',
+  neofetch: () => `<pre style="color:#00DC82">
+        ╭─────────────────────╮
+   ╱╲   │ <span style="color:#fff">arash@void</span>          │
+  ╱  ╲  │──────────────────── │
+ ╱    ╲ │ <span style="color:#888">OS:</span> Nuxt 3           │
+╱──────╲│ <span style="color:#888">Shell:</span> zsh + ohmyzsh │
+╲      ╱│ <span style="color:#888">Editor:</span> VS Code      │
+ ╲    ╱ │ <span style="color:#888">Theme:</span> Void          │
+  ╲  ╱  │ <span style="color:#888">Lang:</span> TypeScript     │
+   ╲╱   │ <span style="color:#888">PKGs:</span> 10+ modules   │
+        ╰─────────────────────╯
+  </pre>`,
+
   cd: async () => {
     await new Promise(resolve => setTimeout(resolve, 500))
     const page = commandInput.value.replace('cd ', '')
