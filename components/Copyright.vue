@@ -1,9 +1,14 @@
+<script setup lang="ts">
+const config = useVoid()
+const copyright = computed(() => config.copyright || {})
+</script>
+
 <template>
-  void (WIP) by
+  {{ copyright.text || 'void by' }}
   <NuxtLink
-    to="https://github.com/nuxtaid"
+    :to="copyright.url || 'https://github.com/nuxtaid'"
     target="_blank"
   >
-    NuxtAid
+    {{ copyright.author || 'NuxtAid' }}
   </NuxtLink>
 </template>

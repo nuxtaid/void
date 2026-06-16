@@ -1,10 +1,28 @@
 export default defineAppConfig({
   void: {
+    // Identity
     name: 'Arash Sheyda',
     avatar: '/assets/01.jpg',
     title: 'a passionate <br/> Software Engineer',
     description: 'with a <span class="text-red-600">love</span> for building creative and meaningful solutions. Whether I\'m coding or exploring the <span class="text-cyan-500">skies</span>, I thrive on discovery and problem-solving. Outside of tech, you\'ll find me enjoying nature, good food, and the occasional DIY adventure.',
+    greeting: 'Hi, I\'m Arash 👋',
+    email: 'hi@arashsheyda.me',
+
+    // Location
+    location: {
+      city: 'Edmonton, AB',
+      flag: '🇨🇦',
+    },
+
+    // Terminal
+    terminal: {
+      prompt: '➜',
+      handle: 'pi@arashsheyda.me',
+    },
+
+    // Socials
     socials: {
+      header: true,
       items: [
         {
           title: 'Github',
@@ -34,6 +52,25 @@ export default defineAppConfig({
           target: '_blank',
         },
       ],
+    },
+
+    // UI Theme
+    ui: {
+      circuit: {
+        enabled: true,
+        speed: 7,
+        particleCount: 56,
+        hueRange: [150, 210],
+        pulseInterval: 1000,
+        fadeOpacity: 0.07,
+      },
+    },
+
+    // Copyright
+    copyright: {
+      text: 'void by',
+      author: 'NuxtAid',
+      url: 'https://github.com/nuxtaid',
     },
   },
 })

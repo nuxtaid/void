@@ -13,10 +13,12 @@ const { data: navigation } = await useAsyncData('navigation:header', () => query
   transform: data => data.filter(item => !item.meta.footer),
 })
 
-const typewriter = [
-  'cmd + k',
-  'hi@arashsheyda.me',
-]
+const typewriter = computed(() => {
+  const items = []
+  if (config.email) items.push(config.email)
+  items.unshift('cmd + k')
+  return items
+})
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const typewriter = [
           class="flex items-center gap-1 -m-1.5 p-1.5 no-underline"
         >
           <span class="text-xs text-green-500 mr-2">
-            ➜
+            {{ config.terminal?.prompt || '➜' }}
           </span>
           <span class="text-[#00c7c7] mr-1">
             ~ {{ route.path !== '/' ? `${route.path.replace('/', '')}` : '' }}

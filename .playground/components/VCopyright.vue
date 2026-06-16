@@ -1,13 +1,9 @@
 <template>
-  <button class="underline">
-    void
-  </button>
-  by
   <NuxtLink
-    to="https://github.com/nuxtaid"
+    to="https://github.com/nuxtaid/void"
     target="_blank"
   >
-    NuxtAid
+    void
   </NuxtLink>
   | Hosted on
   <NuxtLink

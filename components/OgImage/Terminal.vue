@@ -10,6 +10,9 @@ const props = withDefaults(defineProps<{
   glow: true,
 })
 
+const config = useVoid()
+const terminalHandle = computed(() => config.terminal?.handle || config.email || 'user@void')
+
 function textGlow(color: string) {
   return props.glow && `text-shadow: 0 0 10px ${color};`
 }
@@ -30,7 +33,7 @@ function textGlow(color: string) {
         class="sm font-medium"
         :style="textGlow('#fff')"
       >
-        pi@arashsheyda.me
+        {{ terminalHandle }}
       </div>
       <div class="absolute right-4 top-2 flex flex-row gap-2">
         <!-- icon ? -->
@@ -56,7 +59,7 @@ function textGlow(color: string) {
           class="text-yellow-500 mr-4"
           :style="textGlow('#EBB305')"
         >
-          pi@arashsheyda.me
+          {{ terminalHandle }}
         </span>
         <span
           class="text-green-500"

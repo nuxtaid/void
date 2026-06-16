@@ -3,6 +3,7 @@ const props = defineProps<{
   avatar?: string
   title?: string
   description?: string
+  greeting?: string
 }>()
 
 const config = useVoid()
@@ -10,6 +11,7 @@ const config = useVoid()
 const filteredTitle = computed(() => props.title || config.title)
 const filteredAvatar = computed(() => props.avatar || config.avatar)
 const filteredDescription = computed(() => props.description || config.description)
+const filteredGreeting = computed(() => props.greeting || config.greeting)
 </script>
 
 <template>
@@ -20,15 +22,18 @@ const filteredDescription = computed(() => props.description || config.descripti
         class="rounded-full w-40 h-40 object-cover border-2 border-[#1A1A1A]"
         :src="filteredAvatar"
       >
-      <div class="flex gap-1 items-center absolute bottom-1 left-28 bg-[#1A1A1A] px-2 text-sm py-1 rounded-full border border-neutral-400/10">
-        <span class="mt-[2px]">🇨🇦</span>
+      <div
+        v-if="config.location"
+        class="flex gap-1 items-center absolute bottom-1 left-28 bg-[#1A1A1A] px-2 text-sm py-1 rounded-full border border-neutral-400/10"
+      >
+        <span class="mt-[2px]">{{ config.location.flag }}</span>
         <span class="group-hover:block whitespace-nowrap hidden">
-          Edmonton, AB
+          {{ config.location.city }}
         </span>
       </div>
     </div>
-    <span class="text-[#999]">
-      Hi, I'm Arash 👋
+    <span v-if="filteredGreeting" class="text-[#999]">
+      {{ filteredGreeting }}
     </span>
     <h1
       class="text-4xl text-[#999] title-mask mt-4"
