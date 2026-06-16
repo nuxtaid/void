@@ -1,6 +1,6 @@
 ---
-title: 𝜋
-description: My Raspberry Pi
+title: "π"
+description: "Monitor my Raspberry Pi in real-time"
 footer: true
 ---
 
