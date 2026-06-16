@@ -5,7 +5,7 @@
   "main": "./nuxt.config.ts",
   "packageManager": "pnpm@9.14.4",
   "scripts": {
-    "dev": "nuxi dev .playground --host 0.0.0.0",
+    "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
