@@ -20,6 +20,7 @@ const linkTarget = computed(() => props.path ? props.target || (props.path.start
     :is="path ? NuxtLink : 'div'"
     :to="path"
     :target="linkTarget"
+    :rel="linkTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="flex flex-col gap-4 justify-between border border-[#2A2A29] p-8 rounded bg-[#1A1A1A] h-96 transition-border duration-300 hover:border-[--void-card-border]"
     :class="{ 'no-underline': path }"
     :style="{
@@ -32,6 +33,8 @@ const linkTarget = computed(() => props.path ? props.target || (props.path.start
         <iframe
           v-if="frame"
           :src="frame"
+          :title="title"
+          loading="lazy"
           class="lg:w-[21rem] lg:h-[11.8rem] h-[15rem] w-full rounded-lg pointer-events-none"
         />
       </slot>

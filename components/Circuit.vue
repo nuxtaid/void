@@ -2,6 +2,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useEventListener, useDebounceFn, useRafFn } from '@vueuse/core'
 
+const config = useVoid()
+const circuitConfig = computed(() => config.ui?.circuit || {})
+
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null
 const particles: Particle[] = []
@@ -61,17 +64,20 @@ const recycleParticle = (particle: Particle) => particlePool.push(particle)
 
 const clear = () => {
   if (!ctx || !canvasRef.value) return
-  ctx.fillStyle = 'rgba(0,0,0,0.07)'
+  const fadeOpacity = circuitConfig.value.fadeOpacity ?? 0.07
+  ctx.fillStyle = `rgba(0,0,0,${fadeOpacity})`
   ctx.fillRect(0, 0, canvasRef.value.width, canvasRef.value.height)
 }
 
 const createPulse = () => {
   if (!canvasRef.value || !ctx) return
 
-  const speed = 7
-  const hue = Math.random() * (210 - 150)
+  const speed = circuitConfig.value.speed ?? 7
+  const hueRange = circuitConfig.value.hueRange as [number, number] | undefined ?? [150, 210]
+  const particleCount = circuitConfig.value.particleCount ?? 56
+  const hue = Math.random() * (hueRange[1] - hueRange[0]) + hueRange[0]
 
-  for (let i = 0; i < 56; i++) {
+  for (let i = 0; i < particleCount; i++) {
     const particle = getParticle()
     particle.init(
       canvasRef.value.width / 2,
@@ -125,7 +131,7 @@ onMounted(() => {
   useEventListener(window, 'resize', resizeCanvas)
 
   // create pulse periodically
-  const pulseInterval = setInterval(createPulse, 1000)
+  const pulseInterval = setInterval(createPulse, circuitConfig.value.pulseInterval ?? 1000)
 
   // animation frame loop
   const { pause } = useRafFn(animate, { immediate: true })
@@ -139,6 +145,7 @@ onMounted(() => {
 
 <template>
   <canvas
+    v-if="circuitConfig.enabled !== false"
     ref="canvasRef"
     class="w-full h-full pointer-events-none"
   />

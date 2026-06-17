@@ -1,37 +1,86 @@
 export default defineAppConfig({
   void: {
+    // Identity
     name: 'Arash Sheyda',
     avatar: '/assets/01.jpg',
     title: 'a passionate <br/> Software Engineer',
     description: 'with a <span class="text-red-600">love</span> for building creative and meaningful solutions. Whether I\'m coding or exploring the <span class="text-cyan-500">skies</span>, I thrive on discovery and problem-solving. Outside of tech, you\'ll find me enjoying nature, good food, and the occasional DIY adventure.',
-    socials: [
-      {
-        title: 'Github',
-        icon: 'uil:github',
-        url: 'https://github.com/nuxtaid/void',
-        target: '_blank',
+    greeting: 'Hi, I\'m Arash 👋',
+    email: 'hi@arashsheyda.me',
+
+    // Location
+    location: {
+      city: 'Edmonton, AB',
+      flag: '🇨🇦',
+    },
+
+    // Terminal
+    terminal: {
+      prompt: '➜',
+      handle: 'pi@arashsheyda.me',
+      searchHint: 'cmd + k',
+    },
+
+    // Pages
+    notFound: {
+      title: '404',
+      message: 'Page not found',
+    },
+    emptyPage: {
+      message: 'Page is empty',
+    },
+
+    // Socials
+    socials: {
+      header: true,
+      items: [
+        {
+          title: 'Github',
+          icon: 'uil:github',
+          url: 'https://github.com/nuxtaid/void',
+          target: '_blank',
+        },
+        {
+          title: 'Twitter',
+          icon: 'uil:twitter',
+          url: 'https://twitter.com/arash_sheyda',
+          color: '#1da1f2',
+          target: '_blank',
+        },
+        {
+          title: 'Bluesky',
+          icon: 'i-simple-icons-bluesky',
+          url: 'https://twitter.com/arash_sheyda',
+          color: '#0385FF',
+          target: '_blank',
+        },
+        {
+          title: 'LinkedIn',
+          icon: 'uil:linkedin',
+          url: 'https://www.linkedin.com/in/arash-sheyda/',
+          color: '#0a66c2',
+          target: '_blank',
+        },
+      ],
+    },
+
+    // UI Theme
+    ui: {
+      circuit: {
+        enabled: true,
+        speed: 7,
+        particleCount: 56,
+        hueRange: [150, 210],
+        pulseInterval: 1000,
+        fadeOpacity: 0.07,
       },
-      {
-        title: 'Twitter',
-        icon: 'uil:twitter',
-        url: 'https://twitter.com/arash_sheyda',
-        color: '#1da1f2',
-        target: '_blank',
-      },
-      {
-        title: 'Bluesky',
-        icon: 'i-simple-icons-bluesky',
-        url: 'https://twitter.com/arash_sheyda',
-        color: '#0385FF',
-        target: '_blank',
-      },
-      {
-        title: 'LinkedIn',
-        icon: 'uil:linkedin',
-        url: 'https://www.linkedin.com/in/arash-sheyda/',
-        color: '#0a66c2',
-        target: '_blank',
-      },
-    ],
+    },
+
+    // Copyright
+    copyright: {
+      text: 'void by',
+      author: 'NuxtAid',
+      url: 'https://github.com/nuxtaid',
+    },
   },
 })
