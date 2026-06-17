@@ -26,8 +26,7 @@ useHead({
     <div
       id="main-content"
       role="main"
-      class="mb-8 px-4 py-8 transition-transform duration-300"
-      :class="open ? '-translate-x-64' : 'translate-x-0'"
+      class="mb-8 px-4 py-8"
     >
       <slot />
     </div>

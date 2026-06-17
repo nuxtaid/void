@@ -16,7 +16,7 @@ const { data: navigation } = await useAsyncData('navigation:header', () => query
 const typewriter = computed(() => {
   const items = []
   if (config.email) items.push(config.email)
-  items.unshift('cmd + k')
+  items.unshift(config.terminal?.searchHint || 'cmd + k')
   return items
 })
 </script>
@@ -24,7 +24,6 @@ const typewriter = computed(() => {
 <template>
   <header
     class="sticky top-0 z-10 backdrop-blur transition-all duration-300 border-b border-neutral-400/10"
-    :class="open ? '-translate-x-64' : 'translate-x-0'"
   >
     <nav
       aria-label="Main navigation"
@@ -55,13 +54,13 @@ const typewriter = computed(() => {
         <button
           :aria-expanded="open"
           aria-controls="mobile-menu"
-          :aria-label="open ? 'Close menu' : 'Open menu'"
+          aria-label="Open menu"
           @click="toggle"
         >
           <Icon
             class="block w-6 h-6"
             aria-hidden="true"
-            :name="open ? 'i-ph-x' : 'i-ph-list'"
+            name="i-ph-list"
           />
         </button>
       </div>
@@ -81,6 +80,15 @@ const typewriter = computed(() => {
     </nav>
   </header>
 
+  <Transition name="menu-backdrop">
+    <div
+      v-if="open"
+      class="fixed inset-0 z-20 bg-black/50 md:hidden"
+      aria-hidden="true"
+      @click="toggle"
+    />
+  </Transition>
+
   <aside
     id="mobile-menu"
     :aria-hidden="!open"
@@ -89,6 +97,19 @@ const typewriter = computed(() => {
     class="fixed top-0 right-0 w-64 h-full bg-[#1f1f1f] border-l border-[#333] z-30 transition-transform duration-300"
     :class="open ? 'translate-x-0' : 'translate-x-64'"
   >
+    <div class="flex items-center justify-between p-4 border-b border-[#333]">
+      <span class="text-sm text-[#818181]">Menu</span>
+      <button
+        aria-label="Close menu"
+        @click="toggle"
+      >
+        <Icon
+          class="block w-5 h-5"
+          aria-hidden="true"
+          name="i-ph-x"
+        />
+      </button>
+    </div>
     <nav
       aria-label="Mobile navigation"
       class="flex flex-col p-4"
@@ -103,5 +124,20 @@ const typewriter = computed(() => {
         {{ item.title }}
       </NuxtLink>
     </nav>
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#333]">
+      <VSocials />
+    </div>
   </aside>
 </template>
+
+<style>
+.menu-backdrop-enter-active,
+.menu-backdrop-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.menu-backdrop-enter-from,
+.menu-backdrop-leave-to {
+  opacity: 0;
+}
+</style>

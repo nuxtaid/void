@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const config = useVoid()
 const { data: page } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
 
 const { title, description } = page.value || {}
@@ -51,7 +52,7 @@ defineOgImage({
         class="p-4"
       />
       <div v-else>
-        <p>Page is empty</p>
+        <p>{{ config.emptyPage?.message || 'Page is empty' }}</p>
       </div>
     </template>
     <div
@@ -59,9 +60,9 @@ defineOgImage({
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center"
     >
       <h1 class="text-4xl font-bold">
-        404
+        {{ config.notFound?.title || '404' }}
       </h1>
-      <p>Page not found</p>
+      <p>{{ config.notFound?.message || 'Page not found' }}</p>
     </div>
   </div>
 </template>

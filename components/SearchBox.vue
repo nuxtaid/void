@@ -35,6 +35,15 @@ watch(() => route.fullPath, () => {
   closeSearchBox()
 })
 
+watch(searchBox, (val) => {
+  if (val) {
+    nextTick(() => {
+      const input = document.getElementById('commandInput')
+      input?.focus()
+    })
+  }
+})
+
 function closeSearchBox() {
   searchBox.value = false
   nextTick(() => {

@@ -18,6 +18,16 @@ export default defineAppConfig({
     terminal: {
       prompt: '➜',
       handle: 'pi@arashsheyda.me',
+      searchHint: 'cmd + k',
+    },
+
+    // Pages
+    notFound: {
+      title: '404',
+      message: 'Page not found',
+    },
+    emptyPage: {
+      message: 'Page is empty',
     },
 
     // Socials
