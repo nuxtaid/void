@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineOgImage({
-  component: 'OgImageTerminal',
-})
+defineOgImage('OgImageTerminal')
 </script>
 
 <template>
