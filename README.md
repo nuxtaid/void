@@ -1,4 +1,4 @@
-# Void
+# 🌀 Void
 
 A terminal-inspired, fully customizable portfolio theme built as a [Nuxt Layer](https://nuxt.com/docs/getting-started/layers). Use it as a starting point for your personal site — everything from identity to UI theme is configurable through `app.config.ts`.
 
@@ -48,6 +48,10 @@ export default defineAppConfig({
 ```bash
 pnpm dev
 ```
+
+`pnpm dev`, `build`, `generate`, and `preview` run against the local `.playground` app. That folder exists only to preview and test the layer during development; it is not required when you install `@nuxtaid/void` in another project.
+
+The root `scripts/` folder also contains local helper files that are not part of the Nuxt layer runtime.
 
 ---
 
