@@ -14,9 +14,7 @@ useSeoMeta({
   twitterDescription: metaHead.twitterDescription || metaHead.description || description,
 })
 
-defineOgImage({
-  component: 'OgImageTerminal',
-})
+defineOgImage('OgImageTerminal')
 </script>
 
 <template>
