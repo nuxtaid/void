@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "main": "./nuxt.config.ts",
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
