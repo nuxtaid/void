@@ -34,6 +34,6 @@
     "@resvg/resvg-js": "^2.6.2",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
-    "satori": "^0.26.0"
+    "satori": "^0.33.0"
   }
 }
