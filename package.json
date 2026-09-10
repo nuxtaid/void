@@ -25,7 +25,7 @@
     "vue": "^3.5.38"
   },
   "dependencies": {
-    "@nuxt/content": "3.14.0",
+    "@nuxt/content": "3.16.0",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/icon": "^2.2.3",
     "@nuxtjs/color-mode": "^4.0.1",
